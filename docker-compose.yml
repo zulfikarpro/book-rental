@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: library-db
+    environment:
+      POSTGRES_USER: libraryUser
+      POSTGRES_PASSWORD: libraryPass
+      POSTGRES_DB: librarydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: library-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/librarydb
+      SPRING_DATASOURCE_USERNAME: libraryUser
+      SPRING_DATASOURCE_PASSWORD: libraryPass
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
