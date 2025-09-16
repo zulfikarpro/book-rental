@@ -2,8 +2,8 @@ package com.example.book_rental.dto;
 
 public class TransactionRequest {
     private Long userId;
-    private Long copyId;     // optional
-    private String isbn;     // optional (if provided, system will pick an available copy)
+    private Long copyId;
+    private String isbn;
     private int durationDays;
 
     public Long getUserId() {

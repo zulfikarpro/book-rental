@@ -42,19 +42,20 @@ public class TransactionService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         BookCopy copy = null;
-        if (req.getCopyId() != null) {
-            // lock row for update
-            copy = copyRepo.findByIdForUpdate(req.getCopyId())
-                    .orElseThrow(() -> new EntityNotFoundException("Copy not found"));
-            if (!copy.isAvailable()) throw new IllegalStateException("Copy already borrowed");
-        } else if (req.getIsbn() != null && !req.getIsbn().isBlank()) {
+        if (req.getIsbn() != null && !req.getIsbn().isBlank()) {
             // find available by ISBN
             List<BookCopy> avail = copyRepo.findAvailableByIsbn(req.getIsbn());
             if (avail.isEmpty()) throw new IllegalStateException("No available copies for ISBN");
             // pick the first and lock it
             copy = copyRepo.findByIdForUpdate(avail.get(0).getCopyId())
                     .orElseThrow();
-        } else {
+        }
+        else if (req.getCopyId() != null) {
+            // lock row for update
+            copy = copyRepo.findByIdForUpdate(req.getCopyId())
+                    .orElseThrow(() -> new EntityNotFoundException("Copy not found"));
+            if (!copy.isAvailable()) throw new IllegalStateException("Copy already borrowed");
+        }  else {
             throw new IllegalArgumentException("Either copyId or isbn must be provided");
         }
 

@@ -16,14 +16,13 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book registerBook(String isbn, String title, String author, int quantity) {
+    public Book registerBook(String isbn, String title, String author) {
         Optional<Book> existing = bookRepository.findByIsbn(isbn);
         if (existing.isPresent()) {
             Book book = existing.get();
-            book.setQuantity(book.getQuantity() + quantity);
             return bookRepository.save(book);
         }
-        Book newBook = new Book(isbn, title, author, quantity);
+        Book newBook = new Book(isbn, title, author);
         return bookRepository.save(newBook);
     }
 

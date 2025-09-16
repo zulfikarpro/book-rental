@@ -1,10 +1,9 @@
 package com.example.book_rental.dto;
 
 public class ReturnRequest {
-    private Long transactionId; // optional
-    private Long copyId;        // optional
-    private Long userId;        // optional
-    // getters/setters
+    private Long transactionId;
+    private Long copyId;
+    private Long userId;
 
 
     public Long getTransactionId() {

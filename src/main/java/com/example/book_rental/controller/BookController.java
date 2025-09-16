@@ -20,7 +20,7 @@ public class BookController {
 
     @PostMapping("/register")
     public GeneralAPIResponse<Book> register(@RequestBody BookRegisterRequest request) {
-        Book book = bookService.registerBook(request.isbn(), request.title(), request.author(), request.quantity());
+        Book book = bookService.registerBook(request.isbn(), request.title(), request.author());
         return new GeneralAPIResponse<>("Book registered successfully", book);
     }
 

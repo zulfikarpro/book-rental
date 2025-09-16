@@ -30,7 +30,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<GeneralAPIResponse<List<Borrower>>> getAllUsers() {
         List<Borrower> listUser =  userService.getAllUsers();
         GeneralAPIResponse<List<Borrower>> response = new GeneralAPIResponse<List<Borrower>>(
